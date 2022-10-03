@@ -86,7 +86,6 @@ jobs:
               run: |
                   cd ./uprpc-app/scripts
                   ./build-windows.sh
-                  cd ../
                   mkdir ./build/release
                   cd ./build/bin
                   cp ./uprpc.exe ../release/uprpc-windows64.exe
