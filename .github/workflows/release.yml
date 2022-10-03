@@ -11,7 +11,7 @@ jobs:
             matrix:
                 os: [macos-latest]
                 go-version: [1.18]
-                platform: [darwin/amd64, linux/amd64, windows/amd64]
+                platform: [darwin/amd64, linux/amd64]
                 include:
                     - platform: darwin/amd64
                       goarch: amd64
@@ -19,9 +19,6 @@ jobs:
                     - platform: linux/amd64
                       goarch: amd64
                       goos: linux
-                    - platform: windows/amd64
-                      goarch: amd64
-                      goos: windows
 
         runs-on: ${{ matrix.os }}
         steps:
