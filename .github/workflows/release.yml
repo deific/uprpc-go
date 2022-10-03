@@ -22,8 +22,6 @@ jobs:
                       goos: linux
                     - goarch: arm64
                       goos: darwin
-                    - goarch: arm64
-                      goos: windows
 
         runs-on: ${{ matrix.platform }}
         steps:
