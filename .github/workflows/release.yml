@@ -60,9 +60,6 @@ jobs:
               run: |
                   cd ./uprpc-app/scripts
                   ./build.sh
-              with:
-                  GOOS: ${{ matrix.goos }}
-                  GOARCH: ${{ matrix.goarch }}
               env:
                   GOOS: ${{ matrix.goos }}
                   GOARCH: ${{ matrix.goarch }}
