@@ -14,8 +14,6 @@ jobs:
                 include:
                     - goarch: amd64
                       goos: darwin
-                    - goarch: arm64
-                      goos: darwin
 
         runs-on: ${{ matrix.platform }}
         steps:
