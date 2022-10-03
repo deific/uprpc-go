@@ -11,7 +11,7 @@ jobs:
             matrix:
                 os: [macos-latest]
                 go-version: [1.18]
-                platform: [darwin/amd64, darwin/arm64]
+                platform: [darwin/amd64, darwin/arm64, windows/amd64, windows/arm64, linux/amd64, linux/arm64]
                 include:
                     - platform: darwin/amd64
                       goarch: amd64
@@ -19,6 +19,18 @@ jobs:
                     - platform: darwin/arm64
                       goarch: arm64
                       goos: darwin
+                    - platform: windows/amd64
+                      goarch: amd64
+                      goos: windows
+                    - platform: windows/arm64
+                      goarch: arm64
+                      goos: windows
+                    - platform: linux/amd64
+                      goarch: amd64
+                      goos: linux
+                    - platform: linux/arm64
+                      goarch: arm64
+                      goos: linux
         runs-on: ${{ matrix.os }}
         steps:
             - uses: actions/checkout@v2
@@ -50,9 +62,9 @@ jobs:
             - name: Build uprpc-app
               run: |
                   cd ./uprpc-app/scripts
-                  ./build-macos-arm.sh ${{ matrix.platform }}
+                  ./build.sh ${{ matrix.platform }}
             - name: Import Code-Signing Certificates for macOS
-              if: matrix.os == 'macos-latest'
+              if: matrix.platform == 'darwin/amd64' or matrix.platform == 'darwin/arm64'
               uses: Apple-Actions/import-codesign-certs@v1
               with:
                   # The certificates in a PKCS12 file encoded as a base64 string
@@ -60,7 +72,7 @@ jobs:
                   # The password used to import the PKCS12 file.
                   p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
             - name: Sign our macOS binary
-              if: matrix.os == 'macos-latest'
+              if: matrix.platform == 'darwin/amd64' or matrix.platform == 'darwin/arm64'
               run: |
                   echo "Signing Package"
                   cd ./uprpc-app
@@ -68,6 +80,15 @@ jobs:
                   gon -log-level=info ./scripts/mac-sign.json    
                   appdmg ./scripts/mac-dmg.json ./build/release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.dmg       
                   cd ./build/bin
+                  zip -r ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.zip ./
+            - name: Zip binary
+              if: matrix.platform != 'darwin/amd64' and matrix.platform != 'darwin/arm64'
+              run: |
+                  echo "Zip Package"
+                  cd ./uprpc-app
+                  mkdir ./build/release     
+                  cd ./build/bin
+                  cp ./uprpc ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}
                   zip -r ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.zip ./
             - name: upload artifacts macOS
               if: matrix.os == 'macos-latest'
