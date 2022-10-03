@@ -60,12 +60,16 @@ jobs:
               run: |
                   cd ./uprpc-app/scripts
                   ./build.sh
+              with:
+                  GOOS: ${{ matrix.goos }}
+                  GOARCH: ${{ matrix.goarch }}
               env:
                   GOOS: ${{ matrix.goos }}
                   GOARCH: ${{ matrix.goarch }}
+
             - name: Import Code-Signing Certificates for macOS
               # if: matrix.platform == 'macos-latest'
-              if: ${{ matrix.goos }} == 'darwin'
+              if: matrix.goos == 'darwin'
               uses: Apple-Actions/import-codesign-certs@v1
               with:
                   # The certificates in a PKCS12 file encoded as a base64 string
@@ -74,7 +78,7 @@ jobs:
                   p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
             - name: Sign our macOS binary
               # if: matrix.platform == 'macos-latest'
-              if: ${{ matrix.goos }} == 'darwin'
+              if: matrix.goos == 'darwin'
               run: |
                   echo "Signing Package"
                   cd ./uprpc-app
@@ -85,7 +89,7 @@ jobs:
                   zip -r ../release/uprpc-arm64.zip ./
             - name: Zip package file
               # if: matrix.platform == 'macos-latest'
-              if: ${{ matrix.goos }} != 'darwin'
+              if: matrix.goos != 'darwin'
               run: |
                   echo "zip Package"
                   cd ./uprpc-app
