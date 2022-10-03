@@ -63,6 +63,7 @@ jobs:
               env:
                   GOOS: ${{ matrix.goos }}
                   GOARCH: ${{ matrix.goarch }}
+                  
             - name: Import Code-Signing Certificates for macOS
               # if: matrix.platform == 'macos-latest'
               if: matrix.goos == 'darwin'
@@ -72,6 +73,7 @@ jobs:
                   p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}
                   # The password used to import the PKCS12 file.
                   p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
+            
             - name: Sign our macOS binary
               # if: matrix.platform == 'macos-latest'
               if: matrix.goos == 'darwin'
