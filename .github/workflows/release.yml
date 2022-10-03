@@ -12,9 +12,11 @@ jobs:
                 platform: [macos-latest]
                 go-version: [1.18]
                 include:
-                    - goarch: amd64
-                      goos: linux
-                    - goarch: amd64
+                    - platform: macos-latest
+                      goarch: arm64
+                      goos: darwin
+                    - platform: macos-latest
+                      goarch: amd64
                       goos: darwin
 
         runs-on: ${{ matrix.platform }}
