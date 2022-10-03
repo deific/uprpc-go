@@ -22,6 +22,7 @@ jobs:
             #   uses: actions/setup-node@v2
             #   with:
             #       node-version: 16.13.1
+            #       cache: 'npm'
             - name: MacOS download gon for code signing and app notarization
               if: matrix.platform == 'macos-latest'
               run: |
@@ -84,7 +85,7 @@ jobs:
               if: matrix.platform == 'windows-latest'
               run: |
                   cd ./uprpc-app/scripts
-                  ./build-windows-arm.sh
+                  ./build-windows.sh
                   cd ../
                   mkdir ./build/release    
                   cd ./build/bin
