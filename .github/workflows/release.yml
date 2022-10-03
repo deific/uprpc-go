@@ -86,10 +86,12 @@ jobs:
               run: |
                   echo "Zip Package"
                   cd ./uprpc-app
-                  mkdir ./build/release     
+                  mkdir ./build/release
                   cd ./build/bin
-                  cp ./uprpc ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}
+                  rename "s/uprpc/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}/" *
+                  cp ./* ../release/
                   zip -r ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.zip ./
+
             - name: upload artifacts macOS
               if: matrix.os == 'macos-latest'
               uses: actions/upload-artifact@v2
