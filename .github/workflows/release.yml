@@ -87,9 +87,9 @@ jobs:
                   cd ./uprpc-app/scripts
                   ./build-windows.sh
                   cd ../
-                  mkdir ./build/release    
+                  mkdir ./build/release
                   cd ./build/bin
-                  cp ./* ../release
+                  cp ./uprpc.exe ../release/uprpc-windows64.exe
                   zip -r ../release/uprpc-windows64.zip ./
 
             - name: upload artifacts windows
