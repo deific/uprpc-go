@@ -13,6 +13,8 @@ jobs:
                 go-version: [1.18]
                 include:
                     - goarch: amd64
+                      goos: linux
+                    - goarch: amd64
                       goos: darwin
 
         runs-on: ${{ matrix.platform }}
@@ -73,7 +75,7 @@ jobs:
                   gon -log-level=info ./scripts/mac-sign.json    
                   appdmg ./scripts/mac-dmg.json ./build/release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.dmg       
                   cd ./build/bin
-                  zip -r ../release/uprpc-arm64.zip ./
+                  zip -r ../release/uprpc-${{ matrix.goos }}-${{ matrix.goarch }}.zip ./
             - name: Zip package file
               # if: matrix.platform == 'macos-latest'
               if: matrix.goos != 'darwin'
