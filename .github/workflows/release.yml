@@ -29,7 +29,7 @@ jobs:
                       platform: linux/arm64
                       goarch: arm64
                       goos: darlinuxwin
-                    - os: ubuntu-latest
+                    - os: ubuntu-22.04
                       platform: linux/amd64
                       goarch: amd64
                       goos: linux
