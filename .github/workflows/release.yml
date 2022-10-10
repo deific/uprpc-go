@@ -25,7 +25,7 @@ jobs:
                     - platform: windows/arm64
                       goarch: arm64
                       goos: windows
-                    - os: ubuntu-latest
+                    - os: ubuntu-22.04
                       platform: linux/arm64
                       goarch: arm64
                       goos: darlinuxwin
